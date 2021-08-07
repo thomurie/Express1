@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "express": "^4.17.1",
+    "mocha": "^9.0.3",
+    "morgan": "^1.10.0"
+  },
+  "name": "express-2",
+  "version": "1.0.0",
+  "description": "Routing and Middleware",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "author": "Thomas",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^27.0.6",
+    "supertest": "^6.1.4"
+  }
+}
