@@ -1,0 +1,20 @@
+{
+  "name": "node_pg",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jest": "^27.0.6",
+    "morgan": "^1.10.0",
+    "pg": "^8.7.1",
+    "supertest": "^6.1.4"
+  }
+}
