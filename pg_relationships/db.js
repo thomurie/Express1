@@ -4,9 +4,9 @@ const pg = require("pg");
 let DB_URI;
 
 if (process.env.NODE_ENV === "test") {
-  DB_URI = `postgresql:///testsbiztime`;
+  DB_URI = `postgresql:///testng_rel`;
 } else {
-  DB_URI = `postgresql:///biztime`;
+  DB_URI = `postgresql:///ng_rel`;
 }
 
 let db = new pg.Client({

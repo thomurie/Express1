@@ -5,7 +5,7 @@ const err = require("./error");
 const items = require("./fakeDb");
 
 // 1.
-router.get("/", (req, res) => {
+router.get("/", (req, res, next) => {
   try {
     res.json(items);
   } catch (error) {

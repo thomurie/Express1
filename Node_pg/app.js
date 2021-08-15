@@ -10,13 +10,14 @@ const app = express();
 const ExpressError = require("./expressError");
 const companies = require(`./routes/companies`);
 const invoices = require("./routes/invoices");
-
+const industry = require("./routes/industry");
 app.use(express.json());
 
 /** 404 handler */
 
 app.use(`/companies`, companies);
 app.use(`/invoices`, invoices);
+app.use(`/industries`, industry);
 
 app.use(function (req, res, next) {
   const err = new ExpressError("Not Found", 404);
