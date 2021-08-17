@@ -2,18 +2,14 @@ const express = require("express");
 const router = new express.Router();
 const err = require("../expressError");
 const db = require("../db");
-const slugify = require("slugify");
+const company = require(`../models/company`);
+const Company = require("../models/company");
 
 // GET /companies
 router.get("/", async (req, res, next) => {
   try {
-    const results = await db.query(`SELECT * FROM companies;`);
-    const wanted_data = [];
-    results.rows.forEach((row) => {
-      const { code, name } = row;
-      wanted_data.push({ code, name });
-    });
-    res.json({ companies: wanted_data });
+    const results = await company.getAll();
+    res.json({ companies: results });
   } catch (error) {
     next(new err("Unexpected Server Error", 500));
   }
@@ -23,9 +19,7 @@ router.get("/", async (req, res, next) => {
 router.get("/:code", async (req, res, next) => {
   try {
     const { code } = req.params;
-    const results = await db.query(`SELECT * FROM companies WHERE code=$1;`, [
-      code,
-    ]);
+    const results = await Company.getById(code);
 
     const invoices = await db.query(
       `SELECT * FROM invoices WHERE comp_code=$1;`,
@@ -56,12 +50,8 @@ router.get("/:code", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const { name, description } = req.body;
-    const code = slugify(name, "_");
-    const results = await db.query(
-      `INSERT INTO companies VALUES ($1, $2, $3) RETURNING *`,
-      [code, name, description]
-    );
-    res.json({ company: results.rows });
+    const results = Company.addComapany(name, description);
+    res.json({ company: results });
   } catch (error) {
     next(new err("Unexpected Server Error", 500));
   }
@@ -86,11 +76,8 @@ router.put("/:code", async (req, res, next) => {
 router.delete("/:code", async (req, res, next) => {
   try {
     const { code } = req.params;
-    const results = await db.query(
-      `DELETE FROM companies WHERE code=$1 RETURNING *`,
-      [code]
-    );
-    res.json({ status: "deleted" });
+    const results = await Company.deleteCompany(code);
+    res.json({ status: results });
   } catch (error) {
     next(new err(`Company cannot be found`, 404));
   }
