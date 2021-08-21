@@ -87,8 +87,17 @@ module.exports = router;
 
 // POST
 // curl -X POST -H "Content-Type: application/json" \
-//     -d '{"name": "Toyota", "description": "Japanese Automotive Manufacturer" }' \
-// http://127.0.0.1:3000/companies/
+//      -d '{
+//   "isbn": "0691161510",
+//   "amazon_url": "http://a.co/eobPtX2",
+//   "author": "Matthew Lane",
+//   "language": "english",
+//   "pages": 264,
+//   "publisher": "Princeton University Press",
+//   "title": "Power-Up: Unlocking the Hidden Mathematics in Video Games",
+//   "year": 2017
+// }' \
+// // http://127.0.0.1:3000/books/
 
 // PUT
 // curl -X PUT -H "Content-Type: application/json" \

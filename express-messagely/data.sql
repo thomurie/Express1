@@ -25,3 +25,17 @@ CREATE TABLE messages (
     sent_at timestamp with time zone NOT NULL,
     read_at timestamp with time zone
 );
+
+
+SELECT a.hacker_id, a.name, COUNT(b.challenge_id) 
+FROM hackers AS a 
+JOIN challenges AS b 
+ON a.hacker_id = b.hacker_id 
+GROUP BY a.hacker_id, a.name 
+HAVING COUNT(b.challenge_id) =(SELECT MAX(y.num)
+  FROM (SELECT COUNT(f.challenge_id) AS num
+          FROM hackers AS e 
+            JOIN challenges AS f 
+            ON e.hacker_id = f.hacker_id 
+            GROUP BY e.hacker_id, e.name ) y )
+ORDER BY COUNT(b.challenge_id) DESC, a.hacker_id;

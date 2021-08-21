@@ -4,6 +4,9 @@ const err = require("./error");
 const bcrypt = require("bcrypt");
 const db = require("./db");
 const jwt = require("jsonwebtoken");
+const jsonschema = require("jsonschema");
+const userSchema = require("sc");
+
 const { ensureLoggedIn } = require("./middleware");
 const { SECRET_KEY, BCRYPT_WORK_FACTOR } = require("./config");
 
@@ -17,6 +20,7 @@ async function checkPwd(pwd, hshedPwd) {
 
 router.post("/register", async (req, res, next) => {
   try {
+    const registerData = jsonschema.validate(req.body, userSchema);
     const { username, password } = req.body;
     if (!username || !password) {
       throw new err("username and password required", 400);
@@ -29,7 +33,9 @@ router.post("/register", async (req, res, next) => {
       [username, hashedPwd]
     );
     return res.json(results.rows);
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 });
 
 router.post("/login", async (req, res, next) => {
